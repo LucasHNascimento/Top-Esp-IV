@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pessoas Cadastradas</h1>
+        <table id="tabela-pessoas">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados serão preenchidos via JavaScript -->
+            </tbody>
+        </table>
+        <a href="cadastro.html">Voltar para Cadastro</a>
+    </div>
+
+    <script>
+        window.onload = async () => {
+            const response = await fetch('/pessoas');
+            const pessoas = await response.json();
+            
+            const tbody = document.querySelector('#tabela-pessoas tbody');
+            tbody.innerHTML = pessoas.map(pessoa => `
+                <tr>
+                    <td>${pessoa.nome}</td>
+                    <td>${pessoa.email}</td>
+                    <td>${pessoa.telefone || ''}</td>
+                </tr>
+            `).join('');
+        };
+    </script>
+</body>
+</html>

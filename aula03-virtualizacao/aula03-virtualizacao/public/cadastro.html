@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastrar Pessoa</h1>
+        <form action="/pessoas" method="POST">
+            <label>Nome:</label>
+            <input type="text" name="nome" required>
+            
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            
+            <label>Telefone:</label>
+            <input type="text" name="telefone">
+            
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="lista.html">Ver Lista</a>
+    </div>
+</body>
+</html>
