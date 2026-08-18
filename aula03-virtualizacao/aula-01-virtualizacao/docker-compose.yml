@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:14
+    image: postgres:17
     container_name: postgres_container
     restart: always
     environment:
@@ -13,13 +11,21 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d projeto"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   app:
     build: .
+    container_name: app_container
+    restart: always
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - NODE_ENV=development
 
