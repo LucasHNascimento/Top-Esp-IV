@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: app_container
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      # Endereco da maquina virtual banco na rede exclusiva de hospedeiro.
+      # Alterar aqui, e apenas aqui, caso o endereco daquela maquina mude.
+      # A secao 6 do roteiro substitui este valor pelo nome db.
+      - DB_HOST=192.168.56.101

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Lista</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pessoas Cadastradas</h1>
+        <table id="tabela-pessoas">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados serao preenchidos via JavaScript -->
+            </tbody>
+        </table>
+        <p id="aviso"></p>
+        <a href="cadastro.html">Voltar para Cadastro</a>
+    </div>
+
+    <script>
+        window.onload = async () => {
+            const tbody = document.querySelector('#tabela-pessoas tbody');
+            const aviso = document.querySelector('#aviso');
+            try {
+                const response = await fetch('/pessoas');
+                if (!response.ok) {
+                    // A aplicacao respondeu, mas nao conseguiu falar com o banco.
+                    // E a falha parcial examinada na secao 7.3 do roteiro.
+                    aviso.textContent =
+                        'A aplicacao respondeu, mas a consulta ao banco falhou (HTTP '
+                        + response.status + ').';
+                    return;
+                }
+                const pessoas = await response.json();
+                tbody.innerHTML = pessoas.map(pessoa => `
+                    <tr>
+                        <td>${pessoa.nome}</td>
+                        <td>${pessoa.email}</td>
+                        <td>${pessoa.telefone || ''}</td>
+                    </tr>
+                `).join('');
+            } catch (erro) {
+                aviso.textContent = 'Nao foi possivel alcancar a aplicacao: ' + erro.message;
+            }
+        };
+    </script>
+</body>
+</html>
